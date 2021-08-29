@@ -33,16 +33,6 @@ print(configs)
 
 img_shape = (configs.channels, configs.img_size, configs.img_size)
 
-# Loss function
-adversarial_loss = nn.BCELoss()
-
-# Initialize generator and discriminator
-generator = Generator(configs, img_shape)
-discriminator = Discriminator(configs, img_shape)
-
-generator.to(DEVICE)
-discriminator.to(DEVICE)
-adversarial_loss.to(DEVICE)
 
 # Configure data loader
 os.makedirs("../data/mnist", exist_ok=True)
@@ -58,6 +48,19 @@ dataloader = torch.utils.data.DataLoader(
     batch_size=configs.batch_size,
     shuffle=True,
 )
+
+
+# Loss function
+adversarial_loss = nn.BCELoss()
+
+# Initialize generator and discriminator
+generator = Generator(configs, img_shape)
+discriminator = Discriminator(configs, img_shape)
+
+generator = generator.to(DEVICE)
+discriminator = discriminator.to(DEVICE)
+adversarial_loss = adversarial_loss.to(DEVICE)
+
 
 # Optimizers
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=configs.lr, betas=(configs.b1, configs.b2))
