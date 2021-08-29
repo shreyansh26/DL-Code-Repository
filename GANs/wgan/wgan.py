@@ -1,6 +1,7 @@
 import argparse
 import os
 
+import numpy as np
 import torch
 import torch.functional as F
 import torch.nn as nn
@@ -81,7 +82,7 @@ for epoch in range(configs.n_epochs):
         optimizer_D.zero_grad()
 
         # Sample noise as input to generator
-        z = Variable(Tensor(torch.randn((imgs.shape[0], configs.latent_dim), device=DEVICE)))
+        z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], configs.latent_dim))))
 
         # Generate fake images
         gen_imgs = generator(z).detach()
